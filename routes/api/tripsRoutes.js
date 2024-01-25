@@ -27,6 +27,11 @@ router.delete('/:id', async (req, res) => {
     const tripsData = await Trips.destroy(
         {where: {id: req.params.id}}
     )
+    if (!tripsData) {
+      res.status(400).json({message: 'No trip with this ID'});
+      return
+    }
+
     res.status(200).json(tripsData);
   } catch (err) {
     res.status(400).json(err);
